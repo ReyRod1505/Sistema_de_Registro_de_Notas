@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Sistema {
     public static void main(String[] args) {
@@ -12,15 +13,25 @@ public class Sistema {
 
         do {
             System.out.print("Ingrese una nota (0-100): ");
-            double grade = sc.nextDouble();
-            if (grade >= 0 && grade <= 100)  {
-                gradeSum += grade;
-                gradesNumber++;
-            } else {
-                System.out.println("Nota inválida. Por favor, ingrese una nota entre 0 y 100.");
+
+            try {
+                double grade = sc.nextDouble();
+
+                if (grade >= 0 && grade <= 100)  {
+                    gradeSum += grade;
+                    gradesNumber++;
+                } else {
+                    System.out.println("Nota inválida. Por favor, ingrese una nota entre 0 y 100.");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debe ingresar un número.");
+                sc.next(); // limpiar el dato
             }
+
             System.out.print("¿Desea ingresar otra nota? (s/n): ");
             continuee = sc.next();
+
         } while (continuee.equalsIgnoreCase("s"));
 
         if (gradesNumber > 0) {
@@ -41,5 +52,6 @@ public class Sistema {
             System.out.println("No se ingresaron notas para el estudiante.");
         }
 
+        sc.close();
     }
 }
